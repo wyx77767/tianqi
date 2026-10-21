@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI",
+    system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    background-color: #0b1b33;
+    color: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(125 211 252 / 35%);
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 随天气变化的背景                                                            */
+/* -------------------------------------------------------------------------- */
+
+.bg-weather-default {
+  background: linear-gradient(165deg, #0b1b33 0%, #132b4d 48%, #070f1e 100%);
+}
+.bg-weather-clear-day {
+  background: linear-gradient(160deg, #175a9c 0%, #2f87c6 45%, #134b84 100%);
+}
+.bg-weather-clear-night {
+  background: linear-gradient(160deg, #070d1c 0%, #14264a 50%, #050912 100%);
+}
+.bg-weather-partly-cloudy-day {
+  background: linear-gradient(160deg, #245a83 0%, #4c7c9f 48%, #1e425f 100%);
+}
+.bg-weather-partly-cloudy-night {
+  background: linear-gradient(160deg, #0a1327 0%, #1f3151 50%, #070c18 100%);
+}
+.bg-weather-cloudy {
+  background: linear-gradient(160deg, #2f3a48 0%, #55657a 48%, #222b36 100%);
+}
+.bg-weather-rain {
+  background: linear-gradient(160deg, #16222f 0%, #34506a 50%, #101822 100%);
+}
+.bg-weather-thunder {
+  background: linear-gradient(160deg, #0a101d 0%, #25324f 50%, #05080f 100%);
+}
+.bg-weather-snow {
+  background: linear-gradient(160deg, #38485a 0%, #71879c 50%, #2f3d4b 100%);
+}
+.bg-weather-mist {
+  background: linear-gradient(160deg, #35424f 0%, #62717f 50%, #242c34 100%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 毛玻璃卡片                                                                  */
+/* -------------------------------------------------------------------------- */
+
+.glass {
+  background: rgb(255 255 255 / 9%);
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 1.75rem;
+  box-shadow:
+    0 28px 60px -28px rgb(2 10 25 / 70%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.glass-soft {
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 1.25rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 动效                                                                        */
+/* -------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rain-drop {
+  0% {
+    transform: translateY(-3px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(11px);
+    opacity: 0;
+  }
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+@keyframes flash {
+  0%,
+  88%,
+  100% {
+    opacity: 0.35;
+  }
+  91% {
+    opacity: 1;
+  }
+  94% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+.wi-rays {
+  transform-origin: 32px 32px;
+  animation: slow-spin 30s linear infinite;
+}
+
+.wi-cloud {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+.wi-drop {
+  animation: rain-drop 1.5s linear infinite;
+}
+
+.wi-snow {
+  animation: snowfall 3.2s linear infinite;
+}
+
+.wi-flash {
+  animation: flash 4s ease-in-out infinite;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(255 255 255 / 8%);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 10%), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-floaty,
+  .wi-rays,
+  .wi-cloud,
+  .wi-drop,
+  .wi-snow,
+  .wi-flash,
+  .skeleton::after {
+    animation: none;
+  }
+}
